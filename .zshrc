@@ -1,5 +1,6 @@
 # Path to your oh-my-zsh installation.
 
+DISABLE_AUTO_UPDATE="true"
 export ZSH="/Users/mmg/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 plugins=(git zsh-autosuggestions)
@@ -9,7 +10,9 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#333333"
 
+bindkey '^l' autosuggest-accept
 
+# export FZF_DEFAULT_COMMAND="fd --type file --color=always"
 export FZF_DEFAULT_COMMAND="fd --type file --color=always"
 export FZF_DEFAULT_OPTS="--ansi"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -32,34 +35,54 @@ _fzf_compgen_dir() {
 
 . ~/.fzf.zsh
 
-[ -f "/Users/mmg/.ghcup/env" ] && source "/Users/mmg/.ghcup/env" # ghcup-env
+. ~/.openai-key
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/mmg/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/mmg/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/mmg/opt/anaconda3/etc/profile.d/conda.sh"
-    fi
+# if this is on mac os
+if [[ "$OSTYPE" == "darwin"* ]]; then
+        export PATH="/Users/mmg/bin:$PATH"
+        export PATH=/Users/mmg/google-cloud-sdk/bin:$PATH
+        export PATH=/Users/mmg/nvim-macos/bin:$PATH
+        export PATH=/Applications/Docker.app/Contents/Resources/bin/:$PATH
+        . "/Users/mmg/miniconda3/etc/profile.d/conda.sh"
+        source /Users/mmg/.docker/init-zsh.sh || true # Added by Docker Desktop
+
+        test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
 fi
-unset __conda_setup
-# <<< conda initialize <<<
 
-export PATH="/Users/mmg/opt/anaconda3/bin:$PATH"
-export PATH="~/.emacs/bin:$PATH"
-export PATH="/Users/mmg/bin:$PATH"
-export PATH="/Users/mmg/bin:$PATH"
-export PATH="/Users/mmg/go/bin:$PATH"
-export PATH="/usr/local/opt/openjdk/bin:$PATH"
-export JDK_HOME="/usr/local/opt/openjdk"
-export JAVA_HOME="/usr/local/opt/openjdk"
-
-alias eslint="node ~/node_modules/eslint/bin/eslint.js"
-alias luamake=/Users/mmg/luamake/luamake
 alias v=nvim
-alias f="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
+alias vim=nvim
+alias vi=nvim
 
-export PATH="/Users/mmg/git-fuzzy/bin:$PATH"
-bindkey '^ ' autosuggest-accept
+alias f="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
+alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+alias g="git"
+alias gs="git status"
+alias gco="git checkout"
+alias gcm="git checkout master"
+alias gcb="git checkout -b"
+alias gpl="git pull"
+
+# checkout previous commit
+alias gcp="git checkout HEAD^"
+
+# checkout next commit
+alias gcn="git checkout HEAD@{1}"
+
+# Aweseome aliases everyone should have
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias -- -="cd -"
+alias c="clear"
+alias h="history"
+alias j="jobs -l"
+alias l="ls -lah"
+alias la="ls -A"
+alias ll="ls -lh"
+alias ls="ls -G"
+alias mkdir="mkdir -p"
+alias p="ps aux | grep -v grep | grep -i -e VSZ -e"
+alias rm="rm -i"
+
+
