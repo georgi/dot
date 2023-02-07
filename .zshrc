@@ -2,7 +2,7 @@
 
 DISABLE_AUTO_UPDATE="true"
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="robbyrussell"
+ZSH_THEME="agnoster"
 plugins=(git zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
@@ -73,6 +73,7 @@ alias l="ls -lah"
 alias la="ls -A"
 alias ll="ls -lh"
 alias ls="ls -G"
+alias lg="lazygit"
 alias mkdir="mkdir -p"
 alias p="ps aux | grep -v grep | grep -i -e VSZ -e"
 alias rm="rm -i"
