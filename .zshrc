@@ -49,6 +49,7 @@ fi
 alias v=nvim
 alias vim=nvim
 alias vi=nvim
+export EDITOR=nvim
 
 alias q="exit"
 alias s="sudo"
