@@ -96,8 +96,9 @@ alias gcp="git checkout HEAD^"
 # checkout next commit
 alias gcn="git checkout HEAD@{1}"
 
-
 . ~/.openai-key
+
+eval "$(github-copilot-cli alias -- "$0")"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
