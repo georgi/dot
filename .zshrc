@@ -25,12 +25,12 @@ export FZF_ALT_C_OPTS="--preview 'ls {}'"
 # - The first argument to the function ($1) is the base path to start traversal
 # - See the source code (completion.{bash,zsh}) for the details.
 _fzf_compgen_path() {
-  fd --hidden --follow --exclude ".git" . "$1"
+  fdfind --hidden --follow --exclude ".git" . "$1"
 }
 
 # Use fd to generate the list for directory completion
 _fzf_compgen_dir() {
-  fd --type d --hidden --follow --exclude ".git" . "$1"
+  fdfind --type d --hidden --follow --exclude ".git" . "$1"
 }
 
 . ~/.fzf.zsh
@@ -79,7 +79,7 @@ alias mkdir="mkdir -p"
 alias p="ps aux | grep -v grep | grep -i -e VSZ -e"
 alias rm="rm -i"
 
-alias fd=fd-find
+alias fd=fdfind
 alias f="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
 alias g="git"
