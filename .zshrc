@@ -59,10 +59,8 @@ alias h="history"
 alias c="conda"
 alias ca="conda activate"
 alias b="bat"
-alias u="up"
 alias t="tree"
-alias o="openai"
-alias n="node"
+alias n="neovide --multigrid"
 alias i="ipython"
 alias j="jobs -l"
 alias ..="cd .."
@@ -96,7 +94,33 @@ alias gcp="git checkout HEAD^"
 # checkout next commit
 alias gcn="git checkout HEAD@{1}"
 
+
+# useful aliases for aws cli
+
+set_aws_aliases() {
+  alias s3="aws s3"
+  alias sqs="aws sqs"
+  alias ec2="aws ec2"
+  alias ssm="aws ssm"
+  alias iam="aws iam"
+  alias sts="aws sts"
+  alias ses="aws ses"
+  alias ecr="aws ecr"
+  alias sage="aws sagemaker"
+  alias apprunner="aws apprunner"
+  alias cloudfront="aws cloudfront"
+}
+
+set_aws_aliases
+
+use_localstack() {
+  alias aws="aws --endpoint-url=http://localhost:4566"
+  set_aws_aliases
+}
+
+
 . ~/.openai-key
+. ~/.localstack-key
 
 eval "$(github-copilot-cli alias -- "$0")"
 
@@ -125,4 +149,6 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/bin/terraform terraform
