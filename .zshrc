@@ -3,7 +3,7 @@
 DISABLE_AUTO_UPDATE="true"
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="eastwood"
-plugins=(git zsh-autosuggestions)
+plugins=(git zsh-autosuggestions kubectl docker docker-compose fzf fzf-tab)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -46,12 +46,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
 fi
 
-alias v=nvim
-alias vim=nvim
-alias vi=nvim
+export PATH="${HOME}/dasht/bin:$PATH"
+export MANPATH="${HOME}/dasht/man:$MANPATH"
+source "${HOME}/dasht/etc/zsh/completions.zsh"
+
 export EDITOR=nvim
 
-alias q="exit"
 alias s="sudo"
 alias d="docker"
 alias g="git"
@@ -95,6 +95,122 @@ alias gcp="git checkout HEAD^"
 alias gcn="git checkout HEAD@{1}"
 
 
+# conda aliases
+alias ca="conda activate"
+alias cenv="conda env"
+alias cenvl="conda env list"
+alias cenvc="conda env create"
+alias cenvr="conda env remove"
+alias cenvu="conda env update"
+alias cenvi="conda env info"
+alias cenva="conda env export --no-builds > environment.yml"
+alias cenvc="conda env create --file environment.yml"
+alias cenvu="conda env update --file environment.yml --prune"
+
+
+# kubectl aliases
+alias k="kubectl"
+alias kg="kubectl get"
+alias kga="kubectl get all"
+alias kgd="kubectl get deployments"
+alias kgp="kubectl get pods"
+alias kgs="kubectl get services"
+alias kgn="kubectl get nodes"
+alias kgc="kubectl get configmaps"
+alias kge="kubectl get events"
+alias kgr="kubectl get replicasets"
+alias kgi="kubectl get ingress"
+
+alias kd="kubectl describe"
+alias kdp="kubectl describe pods"
+alias kdd="kubectl describe deployments"
+alias kds="kubectl describe services"
+alias kdn="kubectl describe nodes"
+alias kdc="kubectl describe configmaps"
+alias kde="kubectl describe events"
+alias kdr="kubectl describe replicasets"
+alias kdi="kubectl describe ingress"
+
+alias krm="kubectl delete"
+alias krmf="kubectl delete -f"
+alias krmgp="kubectl delete --grace-period=0 --force"
+alias krmgpf="kubectl delete --grace-period=0 --force -f"
+
+alias kaf="kubectl apply -f"
+alias kafk="kubectl apply -f -k"
+
+alias kex="kubectl exec -it"
+alias klo="kubectl logs -f"
+
+alias kctx="kubectl config use-context"
+alias kctxs="kubectl config get-contexts"
+alias kctxc="kubectl config current-context"
+
+alias kdr="kubectl drain"
+alias kunc="kubectl uncordon"
+alias kdel="kubectl delete"
+
+# kubectl monitoring
+alias ktop="kubectl top"
+alias ktopp="kubectl top pods"
+alias ktopn="kubectl top nodes"
+
+# kubectl port forwarding
+alias kpf="kubectl port-forward"
+alias kpfsvc="kubectl port-forward svc"
+
+
+# kubectl debugging
+alias kdebug="kubectl run -i --tty --rm debug --image=busybox --restart=Never -- sh"
+
+# kubectl kustomize
+alias kust="kubectl kustomize"
+
+# kubectl krew
+alias krew="kubectl krew"
+
+# kubectl k9s
+alias k9s="k9s"
+
+
+# Minikube aliases
+
+alias mk="minikube"
+
+# minikube service aliases
+alias mks="minikube service"
+alias mksg="minikube service list"
+alias mksgp="minikube service list --url"
+alias mkdebug="minikube ssh"
+alias mkad="minikube addons"
+alias mkd="minikube dashboard"
+alias mkk="minikube kubectl"
+alias mkdocker="minikube docker-env"
+alias mkssh="minikube ssh"
+alias mkst="minikube status"
+alias mkstart="minikube start"
+alias mkstop="minikube stop"
+alias mkdel="minikube delete"
+alias mkip="minikube ip"
+alias mkcfg="minikube config"
+alias mkall="alias | grep mk"
+alias kall="alias | grep kubectl"
+alias awsall="alias | grep aws"
+alias gall="alias | grep git"
+alias dall="alias | grep docker"
+alias call="alias | grep conda"
+alias vall="alias | grep vim"
+alias zall="alias | grep zsh"
+
+
+# vim aliases
+alias v="nvim"
+alias vi="nvim"
+alias vim="nvim"
+alias vdiff="nvim -d"
+
+
+
 # useful aliases for aws cli
 
 set_aws_aliases() {
@@ -106,9 +222,6 @@ set_aws_aliases() {
   alias sts="aws sts"
   alias ses="aws ses"
   alias ecr="aws ecr"
-  alias sage="aws sagemaker"
-  alias apprunner="aws apprunner"
-  alias cloudfront="aws cloudfront"
 }
 
 set_aws_aliases
@@ -126,8 +239,7 @@ eval "$(github-copilot-cli alias -- "$0")"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-# This is too slow...
-# __conda_setup="$('/Users/mmg/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/mmg/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 # if anaconda3 is installed
 if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
   . $HOME/anaconda3/etc/profile.d/conda.sh
@@ -152,3 +264,7 @@ esac
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
+
+
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+enable-fzf-tab
