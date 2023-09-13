@@ -48,7 +48,10 @@ fi
 
 export PATH="${HOME}/dasht/bin:$PATH"
 export MANPATH="${HOME}/dasht/man:$MANPATH"
-source "${HOME}/dasht/etc/zsh/completions.zsh"
+
+if [[ -e "${HOME}/dasht/etc/zsh/completions.zsh" ]]; then
+  source "${HOME}/dasht/etc/zsh/completions.zsh"
+fi
 
 export EDITOR=nvim
 
